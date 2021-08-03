@@ -139,7 +139,7 @@ public class User extends BaseEntity implements UserDetails {
     }
     @Column(name = "is_online", nullable = false , columnDefinition = "BOOLEAN DEFAULT FALSE")
     public boolean isOnline() {
-        return isOnline;
+        return this.isOnline;
     }
 
     public void setOnline(boolean online) {
