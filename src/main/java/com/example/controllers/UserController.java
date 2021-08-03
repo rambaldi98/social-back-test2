@@ -11,6 +11,7 @@ import com.example.utils.constants.ResponseMessageConstants;
 import com.example.utils.responseHandler.exceptions.BadRequestException;
 import com.example.utils.responseHandler.exceptions.CustomException;
 import com.example.utils.responseHandler.successResponse.SuccessResponse;
+import com.example.validations.annotations.Password;
 import com.example.validations.serviceValidation.services.UserValidationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.modelmapper.ModelMapper;
@@ -45,24 +46,28 @@ public class UserController {
     public ResponseEntity<Object> registerUser(@RequestBody @Valid UserRegisterBindingModel userRegisterBindingModel) throws Exception {
 
         if (!userValidationService.isValid(userRegisterBindingModel.getPassword(), userRegisterBindingModel.getConfirmPassword())) {
+            System.out.println(ResponseMessageConstants.PASSWORDS_MISMATCH_ERROR_MESSAGE);
             throw new BadRequestException(ResponseMessageConstants.PASSWORDS_MISMATCH_ERROR_MESSAGE);
         }
 
         if (!userValidationService.isValid(userRegisterBindingModel)) {
+            System.out.println(SERVER_ERROR_MESSAGE);
             throw new Exception(SERVER_ERROR_MESSAGE);
         }
 
         UserServiceModel user = modelMapper.map(userRegisterBindingModel, UserServiceModel.class);
+//        System.out.println( "1 " + user);
         UserCreateViewModel savedUser = this.userService.createUser(user);
-
+//        System.out.println("2" + savedUser);
         SuccessResponse successResponse = successResponseBuilder(LocalDateTime.now(), ResponseMessageConstants.SUCCESSFUL_REGISTER_MESSAGE, savedUser, true);
-
+//        System.out.println("3" + successResponse);
         return new ResponseEntity<>(this.objectMapper.writeValueAsString(successResponse), HttpStatus.OK);
     }
     private SuccessResponse successResponseBuilder(LocalDateTime timestamp, String message, Object payload, boolean success) {
         return new SuccessResponse(timestamp, message, payload, success);
     }
 
+    // tra ve user view model
     @GetMapping(value = "/all/{id}")
     public List<UserAllViewModel> getAllUsers(@PathVariable(value = "id") String userId) throws Exception {
         List<UserServiceModel> allUsers = this.userService.getAllUsers(userId);
@@ -75,7 +80,7 @@ public class UserController {
                 })
                 .collect(Collectors.toList());
     }
-
+    // tra ve chi tiet user
     @GetMapping(value = "/details/{id}")
     public ResponseEntity getDetails(@PathVariable String id) throws Exception {
         UserDetailsViewModel user = this.userService.getById(id);
