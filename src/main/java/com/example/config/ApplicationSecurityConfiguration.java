@@ -52,6 +52,7 @@ public class ApplicationSecurityConfiguration
                 .disable()
                 .authorizeRequests()
                 .antMatchers("/users/register",
+//                        "/users/updatepassword/**",
 //                        "/**",
                         "/favicon.ico",
                         "/**/*.png",

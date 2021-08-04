@@ -12,6 +12,12 @@ public class UserLoginBindingModel {
 
     public UserLoginBindingModel() {
     }
+
+    public UserLoginBindingModel(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
     @Pattern(regexp = "^([a-zA-Z0-9]+)$")
     @Size(min = 4, max = 16, message = ValidationMessageConstants.INVALID_CREDENTIALS_MESSAGE)
     public String getUsername() {

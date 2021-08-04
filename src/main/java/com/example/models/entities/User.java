@@ -15,9 +15,11 @@ public class User extends BaseEntity implements UserDetails {
     private String username;
     private String email;
     private String password;
-    private String firstName;
-    private String lastName;
+//    private String firstName;
+//    private String lastName;
     private String address;
+    private String phone;
+    private String birthday;
     private String city;
     private boolean isDeleted;
     private Set<UserRole> authorities;
@@ -79,23 +81,24 @@ public class User extends BaseEntity implements UserDetails {
         this.password = password;
     }
 
-    @Column(name = "first_name", nullable = false)
-    public String getFirstName() {
-        return this.firstName;
-    }
+//    @Column(name = "first_name", nullable = false)
+//    public String getFirstName() {
+//        return this.firstName;
+//    }
+//
+//    public void setFirstName(String firstName) {
+//        this.firstName = firstName;
+//    }
+//
+//    @Column(name = "last_name", nullable = false)
+//    public String getLastName() {
+//        return this.lastName;
+//    }
+//
+//    public void setLastName(String lastName) {
+//        this.lastName = lastName;
+//    }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    @Column(name = "last_name", nullable = false)
-    public String getLastName() {
-        return this.lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
 
     @Column(name = "address", nullable = false)
     public String getAddress() {

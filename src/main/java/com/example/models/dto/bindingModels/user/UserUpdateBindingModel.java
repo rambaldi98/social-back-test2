@@ -13,8 +13,8 @@ public class UserUpdateBindingModel implements Serializable {
     private String id;
     private String username;
     private String email;
-    private String firstName;
-    private String lastName;
+    private String phone;
+    private String birthday;
     private String address;
     private String city;
     private String profilePicUrl;
@@ -52,22 +52,20 @@ public class UserUpdateBindingModel implements Serializable {
         this.email = email;
     }
 
-    @Pattern(regexp = "^[A-Z]([a-zA-Z]+)?$", message = ValidationMessageConstants.USER_INVALID_FIRST_NAME_MESSAGE)
-    public String getFirstName() {
-        return this.firstName;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    @Pattern(regexp = "^[A-Z]([a-zA-Z]+)?$", message = ValidationMessageConstants.USER_INVALID_LAST_NAME_MESSAGE)
-    public String getLastName() {
-        return this.lastName;
+    public String getBirthday() {
+        return birthday;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
     }
 
     @NotNull(message = ValidationMessageConstants.USER_ADDRESS_REQUIRED_MESSAGE)

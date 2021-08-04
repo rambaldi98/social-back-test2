@@ -18,18 +18,17 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     User findByEmailAndPassword(String email, String password);
 
-    User findAllByFirstName(String firstName);
 
     Optional<User> findByUsername(String username);
 
-    @Query(value = "" +
-            "SELECT u FROM User AS u " +
-            "WHERE u.id <> :id AND " +
-            "(LOWER(u.firstName) LIKE CONCAT('%', :searchSymbols, '%') OR " +
-            "LOWER(u.lastName) LIKE CONCAT('%', :searchSymbols, '%'))  ")
-    List<User> findAllUsersLike(@Param(value = "id") String id,
-                                @Param(value = "searchSymbols") String searchSymbols);
-
+//    @Query(value = "" +
+//            "SELECT u FROM User AS u " +
+//            "WHERE u.id <> :id AND " +
+//            "(LOWER(u.firstName) LIKE CONCAT('%', :searchSymbols, '%') OR " +
+//            "LOWER(u.lastName) LIKE CONCAT('%', :searchSymbols, '%'))  ")
+//    List<User> findAllUsersLike(@Param(value = "id") String id,
+//                                @Param(value = "searchSymbols") String searchSymbols);
+    List<User> findAll();
     @Transactional
     @Modifying
     @Query(value = "Update User as u " +

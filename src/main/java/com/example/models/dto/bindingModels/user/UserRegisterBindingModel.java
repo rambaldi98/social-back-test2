@@ -7,6 +7,7 @@ import com.example.validations.annotations.UniqueEmail;
 import com.example.validations.annotations.UniqueUsername;
 import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -18,8 +19,10 @@ public class UserRegisterBindingModel implements Serializable {
     private String email;
     private String password;
     private String confirmPassword;
-    private String firstName;
-    private String lastName;
+    @NotBlank
+    @Size(min = 10, max = 12)
+    private String phone;
+    private String birthday;
     private String address;
     private String city;
     private String profilePicUrl;
@@ -66,22 +69,21 @@ public class UserRegisterBindingModel implements Serializable {
         this.confirmPassword = confirmPassword;
     }
 
-    @Pattern(regexp = "^[A-Z]([a-zA-Z]+)?$", message = ValidationMessageConstants.USER_INVALID_FIRST_NAME_MESSAGE)
-    public String getFirstName() {
-        return this.firstName;
+
+    public String getPhone() {
+        return phone;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    @Pattern(regexp = "^[A-Z]([a-zA-Z]+)?$", message = ValidationMessageConstants.USER_INVALID_LAST_NAME_MESSAGE)
-    public String getLastName() {
-        return this.lastName;
+    public String getBirthday() {
+        return birthday;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
     }
 
     @NotNull(message = ValidationMessageConstants.USER_ADDRESS_REQUIRED_MESSAGE)

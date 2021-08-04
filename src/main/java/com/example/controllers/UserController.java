@@ -1,7 +1,9 @@
 package com.example.controllers;
 
+import com.example.models.dto.bindingModels.user.UserLoginBindingModel;
 import com.example.models.dto.bindingModels.user.UserRegisterBindingModel;
 import com.example.models.dto.bindingModels.user.UserUpdateBindingModel;
+import com.example.models.dto.bindingModels.user.UserUpdatePasswordBindingModel;
 import com.example.models.dto.serviceModels.UserServiceModel;
 import com.example.models.dto.viewModels.user.UserAllViewModel;
 import com.example.models.dto.viewModels.user.UserCreateViewModel;
@@ -56,11 +58,11 @@ public class UserController {
         }
 
         UserServiceModel user = modelMapper.map(userRegisterBindingModel, UserServiceModel.class);
-//        System.out.println( "1 " + user);
+
         UserCreateViewModel savedUser = this.userService.createUser(user);
-//        System.out.println("2" + savedUser);
+
         SuccessResponse successResponse = successResponseBuilder(LocalDateTime.now(), ResponseMessageConstants.SUCCESSFUL_REGISTER_MESSAGE, savedUser, true);
-//        System.out.println("3" + successResponse);
+
         return new ResponseEntity<>(this.objectMapper.writeValueAsString(successResponse), HttpStatus.OK);
     }
     private SuccessResponse successResponseBuilder(LocalDateTime timestamp, String message, Object payload, boolean success) {
