@@ -1,6 +1,7 @@
 package com.example.web.filters;
 
 
+import com.example.models.dto.viewModels.user.UserToken;
 import com.example.models.entities.User;
 import com.example.models.dto.bindingModels.user.UserLoginBindingModel;
 import com.example.services.LoggerService;
@@ -10,6 +11,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -77,23 +80,36 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .claim("role", authority)
                 .claim("id", id)
                 .claim("profilePicUrl", profilePicUrl)
-                .claim("firstName", firstName)
+                .claim("username", firstName)
                 .signWith(SignatureAlgorithm.HS256, "Secret".getBytes())
                 .compact();
 
-        String tokenJson = this.mapper.writeValueAsString("token " + token);
+        UserToken userToken = new UserToken(
+                user.getId(),
+                user.getUsername(),
+                user.getEmail(),
+                user.getPhone(),
+                user.getBirthday(),
+                user.getAddress(),
+                user.getCity(),
+                user.getAuthorities()
+        );
+        userToken.setToken(token);
+
+//        String tokenJson = this.mapper.writeValueAsString("token " + token);
 
 //        response.getWriter()
 //                .append("Authorization: Bearer " + token);
-        response.getWriter()
-                .append(tokenJson);
+//        response.getWriter()
+//                .append(tokenJson);
 
+//        response.getWriter().print(userToken);
 
         if (request.getMethod().equals("POST") && request.getRequestURI().endsWith("/login")) {
             String username = user.getUsername();
             loggerService.createLog("POST", username, "-", "login");
         }
-
-        response.addHeader("Authorization", "Bearer " + token);
+        new ResponseEntity<>(userToken, HttpStatus.OK);
+//        response.addHeader("Authorization", "Bearer " + token);
     }
 }
